@@ -1,0 +1,60 @@
+---
+title: "LA map code"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+install.packages("maps")
+install.packages("mapdata")
+install.packages("ggmap")
+install.packages("mapproj")
+install.packages("ggplot2")
+
+register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
+
+library(maps)
+library(mapdata)
+library(ggmap) #use to read map
+library(mapproj) #map tools kits
+library(ggplot2) #read the map data
+```
+
+```{r}
+
+LA_map <- get_map(location = "los angeles, california", zoom = 12)
+
+ggmap(LA_map)
+
+
+
+
+```
+
+
+
+
+
+```{r}
+#get the map of LA
+LA_map <- qmap(location = "Los Angeles", zoom = 12)
+
+#unfactor variable
+year_2017$lat <- unfactor(year_2017$lat)
+year_2017$long <- unfactor(year_2017$long)
+
+#select relevant variables
+mapping <- year_2017 %>%
+  select(`Crime Code Description`, long, lat) %>%
+  filter(`Crime Code Description` == 'BATTERY - SIMPLE ASSAULT') %>%
+  na.omit()
+
+#mapping
+LA_map + geom_density_2d(aes(x = long, y = lat), data = mapping) +
+  stat_density2d(data = mapping, 
+    aes(x = long, y = lat, fill = ..level.., alpha = ..level..), size = 0.01, 
+    bins = 16, geom = "polygon") + scale_fill_gradient(low = "green", high = "red", 
+    guide = FALSE) + scale_alpha(range = c(0, 0.3), guide = FALSE)
+```
+
