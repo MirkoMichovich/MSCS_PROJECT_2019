@@ -1,0 +1,20 @@
+---
+title: "Project2019"
+author: "Mirko Michovich"
+date: "5/7/2019"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+collisions <- read.csv("traffic-collision-data-from-2010-to-present.csv")
+collisions_subset <- collisions[sample(nrow(collisions),10000),]
+View(collisions_subset)
+```
+
+
+
