@@ -8,6 +8,7 @@ runtime: shiny
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 
@@ -47,6 +48,7 @@ rename("Row original" = X,
 #str(collisions_subset_10000_renamed)
 view(collisions_subset_10000_renamed)
 #write.csv(collisions_subset, "Collision 5000.csv")
+#write.csv(collisions_subset_10000_renamed, "tidy_collisions.csv")
 
 ```
 
