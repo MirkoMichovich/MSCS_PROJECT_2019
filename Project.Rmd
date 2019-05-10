@@ -8,6 +8,20 @@ runtime: shiny
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+install.packages("maps")
+install.packages("mapdata")
+install.packages("ggmap")
+install.packages("mapproj")
+install.packages("ggplot2")
+
+register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
+
+library(maps)
+library(mapdata)
+library(ggmap) #use to read map
+library(mapproj) #map tools kits
+library(ggplot2) #read the map data
+library(tidyverse)
 ```
 
 
@@ -43,11 +57,16 @@ rename("Row original" = X,
          `Date Occurred` = str_sub(`Date Occurred`, 0, 10))
 
 
-
 #str(collisions_subset_10000_renamed)
 view(collisions_subset_10000_renamed)
 #write.csv(collisions_subset, "Collision 5000.csv")
 
+```
+
+```{r}
+LA_map <- get_map(location = "los angeles, california", zoom = 12)
+
+ggmap(LA_map)
 ```
 
 
