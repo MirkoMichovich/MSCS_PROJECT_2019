@@ -10,10 +10,44 @@ runtime: shiny
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 ```{r}
-collisions <- read.csv("traffic-collision-data-from-2010-to-present.csv")
-collisions_subset <- collisions[sample(nrow(collisions),10000),]
-View(collisions_subset)
+collisions_subset_10000 <- read.csv("Collision 10000.csv")
+#collisions_subset_10000 <- collisions[sample(nrow(collisions),10000),]
+
+collisions_subset_10000_renamed <- collisions_subset_10000 %>%
+rename("Row original" = X,
+       "Division of Records" = DR.Number,
+       "Date Reported" = Date.Reported,
+       "Date Occurred" = Date.Occurred,
+       "Time Occurred" = Time.Occurred,
+       "Area ID" = Area.ID,
+       "Area Name" = Area.Name,
+       "Reporting Distric" = Reporting.District,
+       "Crime Code" = Crime.Code,
+       "Crime Code Description" = Crime.Code.Description,
+       "Modus Operandi Codes" = MO.Codes,
+       "Victim Age" = Victim.Age,
+       "Victim Sex" = Victim.Sex,
+       "Victim Descent" = Victim.Descent,
+       "Premise Code" = Premise.Code,
+       "Premise Description" = Premise.Description,
+       "Cross Street" = Cross.Street,
+       "Zip Codes" = Zip.Codes,
+       "Census Tracts" = Census.Tracts,
+       "Precint Boundaries" = Precinct.Boundaries,
+       "LA Specific Plans" = LA.Specific.Plans,
+       "Council Districts" = Council.Districts,
+       "Neighborhood Councils" = Neighborhood.Councils..Certified.)%>%
+  mutate(`Date Reported` = str_sub(`Date Reported`, 0, 10),
+         `Date Occurred` = str_sub(`Date Occurred`, 0, 10))
+
+
+
+#str(collisions_subset_10000_renamed)
+view(collisions_subset_10000_renamed)
+#write.csv(collisions_subset, "Collision 5000.csv")
+
 ```
 
 
