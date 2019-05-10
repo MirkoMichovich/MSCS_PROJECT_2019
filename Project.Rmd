@@ -73,12 +73,12 @@ library(ggplot2) #read the map data
 ```
 
 ```{r}
-
 LA_map <- get_map(location = "los angeles, california", zoom = 12)
-
 ggmap(LA_map)
 
-
+#shiny app - interactive graph with buttons and sliders up top 
+  
+#heatmap and stuff below 
 
 
 ```
