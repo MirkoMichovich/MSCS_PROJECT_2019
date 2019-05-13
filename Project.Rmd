@@ -8,29 +8,35 @@ runtime: shiny
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-<<<<<<< HEAD
-install.packages("maps")
-install.packages("mapdata")
-install.packages("ggmap")
-install.packages("mapproj")
-install.packages("ggplot2")
 
-register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
+#install.packages("maps")
+#install.packages("mapdata")
+#install.packages("ggmap")
+#install.packages("mapproj")
+#install.packages("ggplot2")
 
 library(maps)
 library(mapdata)
 library(ggmap) #use to read map
 library(mapproj) #map tools kits
 library(ggplot2) #read the map data
-=======
->>>>>>> 01668429211f4bbd54e3aa1aec1a6ea41e0774d7
 library(tidyverse)
+library(stringr)
+
+register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
+
+register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
+
 ```
 
 
 ```{r}
 collisions_subset_10000 <- read.csv("Collision 10000.csv")
 #collisions_subset_10000 <- collisions[sample(nrow(collisions),10000),]
+
+extract_numbers <- function(string){ 
+  str_extract(string, "\\-*\\d+\\.*\\d*")
+} 
 
 collisions_subset_10000_renamed <- collisions_subset_10000 %>%
 rename("Row original" = X,
@@ -40,7 +46,7 @@ rename("Row original" = X,
        "Time Occurred" = Time.Occurred,
        "Area ID" = Area.ID,
        "Area Name" = Area.Name,
-       "Reporting Distric" = Reporting.District,
+       "Reporting District" = Reporting.District,
        "Crime Code" = Crime.Code,
        "Crime Code Description" = Crime.Code.Description,
        "Modus Operandi Codes" = MO.Codes,
@@ -52,14 +58,21 @@ rename("Row original" = X,
        "Cross Street" = Cross.Street,
        "Zip Codes" = Zip.Codes,
        "Census Tracts" = Census.Tracts,
-       "Precint Boundaries" = Precinct.Boundaries,
+       "Precinct Boundaries" = Precinct.Boundaries,
        "LA Specific Plans" = LA.Specific.Plans,
        "Council Districts" = Council.Districts,
        "Neighborhood Councils" = Neighborhood.Councils..Certified.)%>%
   mutate(`Date Reported` = str_sub(`Date Reported`, 0, 10),
-         `Date Occurred` = str_sub(`Date Occurred`, 0, 10))
+         `Date Occurred` = str_sub(`Date Occurred`, 0, 10),
+         `Date Reported` = as.Date(`Date Reported`),
+         `Date Occurred` = as.Date(`Date Occurred`))%>%
+  separate(Location, c("Longitude","Latitude"), sep =',' )%>%
+  mutate(Longitude = extract_numbers(Longitude),
+         Latitude = extract_numbers(Latitude))
 
 
+
+str(collisions_subset_10000_renamed)
 #str(collisions_subset_10000_renamed)
 view(collisions_subset_10000_renamed)
 #write.csv(collisions_subset, "Collision 5000.csv")
@@ -72,24 +85,8 @@ LA_map <- get_map(location = "los angeles, california", zoom = 12)
 ggmap(LA_map)
 ```
 
-
-
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 
-#install.packages("maps")
-#install.packages("mapdata")
-#install.packages("ggmap")
-#install.packages("mapproj")
-#install.packages("ggplot2")
-
-register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
-
-library(maps)
-library(mapdata)
-library(ggmap) #use to read map
-library(mapproj) #map tools kits
-library(ggplot2) #read the map data
 ```
 
 ```{r}
@@ -99,8 +96,9 @@ ggmap(LA_map)
 #shiny app - interactive graph with buttons and sliders up top 
   
 #heatmap and stuff below 
+```
 
-
+```{r}
 ```
 
 
