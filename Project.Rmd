@@ -25,11 +25,6 @@ library(stringr)
 
 register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
 
-<<<<<<< HEAD
-=======
-#register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
-
->>>>>>> 0385115e491102c0950bafec590ed7b86310c648
 ```
 
 
@@ -70,8 +65,9 @@ rename("Row original" = X,
          `Date Reported` = as.Date(`Date Reported`),
          `Date Occurred` = as.Date(`Date Occurred`))%>%
   separate(Location, c("Longitude","Latitude"), sep =',' )%>%
-  mutate(Longitude = extract_numbers(Longitude),
-         Latitude = extract_numbers(Latitude)) 
+  mutate(Longitude = as.numeric(extract_numbers(Longitude)),
+         Latitude = as.numeric(extract_numbers(Latitude)))
+
   
 
 typeof(collisions_subset_10000_renamed$Longitude)
@@ -87,11 +83,9 @@ view(collisions_subset_10000_renamed)
 ```{r}
 LA_map <- get_map(location = "los angeles, california", zoom = 12)
 ggmap(LA_map)
-<<<<<<< HEAD
-=======
 ```
 
-```{r setup, include=FALSE}
+```{r}
 #heatmap 
 
 #morning crashes 
@@ -112,7 +106,6 @@ LA_map + geom_density_2d(aes(x = long, y = lat), data = mapping) +
 ```{r}
 LA_map <- get_map(location = "los angeles, california", zoom = 12)
 ggmap(LA_map)
->>>>>>> 0385115e491102c0950bafec590ed7b86310c648
 
 #shiny app - interactive graph with buttons and sliders up top 
   
