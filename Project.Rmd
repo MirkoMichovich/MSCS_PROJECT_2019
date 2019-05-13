@@ -65,8 +65,10 @@ rename("Row original" = X,
          `Date Reported` = as.Date(`Date Reported`),
          `Date Occurred` = as.Date(`Date Occurred`))%>%
   separate(Location, c("Longitude","Latitude"), sep =',' )%>%
-  mutate(Longitude = as.numeric(extract_numbers(Longitude)),
-         Latitude = as.numeric(extract_numbers(Latitude)))
+  mutate(Longitude = as.character(extract_numbers(Longitude)),
+         Latitude = as.character(extract_numbers(Latitude)),
+         Longitude = as.numeric(Longitude),
+         Latitude = as.numeric(Latitude))
 
   
 
