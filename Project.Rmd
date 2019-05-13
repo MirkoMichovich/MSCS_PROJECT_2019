@@ -25,6 +25,11 @@ library(stringr)
 
 register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
 
+<<<<<<< HEAD
+=======
+#register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
+
+>>>>>>> 0385115e491102c0950bafec590ed7b86310c648
 ```
 
 
@@ -66,9 +71,10 @@ rename("Row original" = X,
          `Date Occurred` = as.Date(`Date Occurred`))%>%
   separate(Location, c("Longitude","Latitude"), sep =',' )%>%
   mutate(Longitude = extract_numbers(Longitude),
-         Latitude = extract_numbers(Latitude))
+         Latitude = extract_numbers(Latitude)) 
+  
 
-
+typeof(collisions_subset_10000_renamed$Longitude)
 
 str(collisions_subset_10000_renamed)
 #str(collisions_subset_10000_renamed)
@@ -81,6 +87,32 @@ view(collisions_subset_10000_renamed)
 ```{r}
 LA_map <- get_map(location = "los angeles, california", zoom = 12)
 ggmap(LA_map)
+<<<<<<< HEAD
+=======
+```
+
+```{r setup, include=FALSE}
+#heatmap 
+
+#morning crashes 
+mapping <- collisions_subset_10000_renamed %>%
+  select(`Crime Code Description`, Longitude, Latitude, `Time Occurred`) %>% 
+  filter(`Crime Code Description` == 'TRAFFIC COLLISION') %>%
+  filter(`Time Occurred` < 900) %>%
+  na.omit()
+
+LA_map + geom_density_2d(aes(x = long, y = lat), data = mapping) +
+  stat_density2d(data = mapping, 
+    aes(x = Longitude, y = Latitude, fill = ..level.., alpha = ..level..), size = 0.01, 
+    bins = 16, geom = "polygon") + scale_fill_gradient(low = "green", high = "red", 
+    guide = FALSE) + scale_alpha(range = c(0, 0.3), guide = FALSE)
+
+```
+
+```{r}
+LA_map <- get_map(location = "los angeles, california", zoom = 12)
+ggmap(LA_map)
+>>>>>>> 0385115e491102c0950bafec590ed7b86310c648
 
 #shiny app - interactive graph with buttons and sliders up top 
   
