@@ -25,8 +25,6 @@ library(stringr)
 
 register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
 
-register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
-
 ```
 
 
@@ -83,23 +81,12 @@ view(collisions_subset_10000_renamed)
 ```{r}
 LA_map <- get_map(location = "los angeles, california", zoom = 12)
 ggmap(LA_map)
-```
-
-```{r setup, include=FALSE}
-
-```
-
-```{r}
-LA_map <- get_map(location = "los angeles, california", zoom = 12)
-ggmap(LA_map)
 
 #shiny app - interactive graph with buttons and sliders up top 
   
 #heatmap and stuff below 
 ```
 
-```{r}
-```
 
 
 
