@@ -87,7 +87,7 @@ view(collisions_subset_10000_renamed)
 ```{r}
 LA_map <- get_map(location = "los angeles, california", zoom = 12)
 ggmap(LA_map)
-<<<<<<< HEAD
+<<<<<<< HEAD 
 =======
 ```
 
