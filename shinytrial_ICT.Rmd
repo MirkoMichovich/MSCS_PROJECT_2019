@@ -31,6 +31,9 @@ library(mapproj) #map tools kits
 library(ggplot2) #read the map data
 library(tidyverse)
 library(stringr)
+library(plotly)
+library(shiny)
+
 
 register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
 
@@ -256,20 +259,19 @@ ggplot(aes(x =  `Time Occurred`, y = `Victim Age`, color = `Victim Sex` )) +
 
 
 
-library(plotly)
 ani_raw <-  sample_n(LA_Collision_complete_tidy, 5000)
-renderPlot(
+
 ani_raw %>%
   plot_ly(x = ~`Neighborhood Councils`, y = ~`Victim Age`, size = ~`Victim Age`, 
           text = ~`Victim Sex`, hoverinfo = "text") %>%
   layout(xaxis = list(type = "log"))%>%
-  add_markers(color = ~`Victim Sex`, frame = ~`Time Occurred`, ids = ~`Victim Descent`) %>%
+           add_markers(color = ~`Victim Sex`, frame = ~`Time Occurred`, ids = ~`Victim Descent`) %>%
   animation_opts(1000, easing = "elastic", redraw = FALSE) %>%
   animation_button(x = 1, xanchor = "right", y = 0, yanchor = "bottom"
   ) %>%
   animation_slider(
-    currentvalue = list(prefix = "Time Occurred", font = list(color="red"))
-  ))
+    currentvalue = list(prefix = "Time Occurred", font = list(color="red")))
+
 ```
 
 
