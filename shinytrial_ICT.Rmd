@@ -22,6 +22,7 @@ library(tidyverse)
 #install.packages("ggmap")
 #install.packages("mapproj")
 #install.packages("ggplot2")
+#install.packages("plotly")
 
 library(maps)
 library(mapdata)
@@ -233,6 +234,43 @@ rainmap <- ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), dat
 #eveningmap
 
 ```
+
+```{r, include = FALSE, warning=FALSE, echo=TRUE}
+#importing weather data 
+# LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
+# View(LAweather1)
+# LAweather1 %>% 
+#   filter(STATION == "US1CALA0036")
+
+#LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
+#View(LAweather2)
+
+LA_Collision_complete_tidy %>%
+ggplot(aes(x =  `Time Occurred`, y = `Victim Age`, color = `Victim Sex` )) + 
+  #geom_point() +
+  geom_smooth( se = FALSE, na.rm = TRUE) +
+  ylim(0, 100) %>%
+  labs(y="Victim Age", 
+       x="Time", 
+       title="Victims age by time")
+
+
+
+library(plotly)
+ani_raw <-  sample_n(LA_Collision_complete_tidy, 5000)
+ani_raw %>%
+  plot_ly(x = ~`Neighborhood Councils`, y = ~`Victim Age`, size = ~`Victim Age`, 
+          text = ~`Victim Sex`, hoverinfo = "text") %>%
+  layout(xaxis = list(type = "log"))%>%
+  add_markers(color = ~`Victim Sex`, frame = ~`Time Occurred`, ids = ~`Victim Descent`) %>%
+  animation_opts(1000, easing = "elastic", redraw = FALSE) %>%
+  animation_button(x = 1, xanchor = "right", y = 0, yanchor = "bottom"
+  ) %>%
+  animation_slider(
+    currentvalue = list(prefix = "Time Occurred", font = list(color="red"))
+  )
+```
+
 
 ```{r, include=FALSE}
 
