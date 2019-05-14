@@ -27,6 +27,20 @@ register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
 
 ```
 
+```{r}
+# Define UI for miles per gallon application
+shinyUI(pageWithSidebar(
+
+  # Application title
+  headerPanel("Miles Per Gallon"),
+
+  sidebarPanel(),
+
+  mainPanel()
+))
+
+```
+
 
 ```{r}
 collisions_subset_10000 <- read.csv("Collision 10000.csv")
