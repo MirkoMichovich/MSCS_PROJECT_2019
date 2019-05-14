@@ -74,8 +74,8 @@ rename("Row original" = X,
        "LA Specific Plans" = LA.Specific.Plans,
        "Council Districts" = Council.Districts,
        "Neighborhood Councils" = Neighborhood.Councils..Certified.)%>%
-  mutate(`Date Reported` = str_sub(`Date Reported`, 0, 10),
-         `Date Occurred` = str_sub(`Date Occurred`, 0, 10),
+  mutate(`Date Reported` = parse_date(str_sub(`Date Reported`, 0, 10)),
+         `Date Occurred` = parse_date(str_sub(`Date Occurred`, 0, 10)),
          `Date Reported` = as.Date(`Date Reported`),
          `Date Occurred` = as.Date(`Date Occurred`))%>%
   separate(Location, c("Longitude","Latitude"), sep =',' )%>%
@@ -85,24 +85,58 @@ rename("Row original" = X,
          Latitude = as.numeric(Latitude))
 
 
-
+# typeof(collisions_subset_10000_renamed$`Date Reported`)
+# str(collisions_subset_10000_renamed)
+# View(collisions_subset_10000_renamed)
 #importing weather data 
-LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
+#LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
+
+#Code of the weather and tidy weather 1 and 2
+LAweather1 <- read_csv("LAweather1.csv")
 #View(LAweather1)
+LAweather_US1CALA0030_1  <- LAweather1 %>%
+  filter( STATION == "US1CALA0030")
+View(LAweather_US1CALA0030_1)
 
-LAweather1.1 <- LAweather1 %>%
+LAweather1.1 <- LAweather_US1CALA0030_1 %>%
   select(DATE, PRCP) %>%
-  mutate(date = as.Date(DATE))
-View(LAweather1.1)
+  mutate(date = as.Date(DATE))%>%
+  rename("Date Occurred" = date)
+
+#View(LAweather1.1)
 
 
+#Renaming the dataset of the weather1.1 in order to make easier the merge with the collision dataset
 
-LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
-#View(LAweather2)
+final_weather_collision_1.1 <- merge(x = LAweather1.1,
+                                 y= collisions_subset_10000_renamed, 
+                                 by = "Date Occurred", all = TRUE)
+view(final_weather_collision_1.1)
 
 
+#Reading weather 2 and mergin to final_weather_collision by PRCP
+#LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
+LAweather2 <- read_csv("LAweather2.csv")
+
+LAweather_US1CALA0030_2  <- LAweather2 %>%
+  filter( STATION == "US1CALA0030")
+View(LAweather_US1CALA0030_2)
+  
+
+LAweather2.1 <- LAweather_US1CALA0030_2 %>%
+  select(PRCP)
+view(LAweather2.1)
+
+LA_Collision_weather_complete <- merge(x = final_weather_collision_1.1, 
+                                       y = LAweather2.1,
+                                       by = "PRCP", all = TRUE)
+#view(LA_Collision_weather_complete)
 
 
+LA_Collision_complete_tidy<-LA_Collision_weather_complete[c(1,2,4:28)] 
+
+
+#view(LA_Collision_complete_tidy)
 
 
 
