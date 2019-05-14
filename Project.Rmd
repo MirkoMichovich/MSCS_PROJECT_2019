@@ -79,12 +79,8 @@ rename("Row original" = X,
          `Date Reported` = as.Date(`Date Reported`),
          `Date Occurred` = as.Date(`Date Occurred`))%>%
   separate(Location, c("Longitude","Latitude"), sep =',' )%>%
-
   mutate(Longitude = as.numeric(extract_numbers(Longitude)),
-         Latitude = as.numeric(extract_numbers(Latitude)))
-
-typeof(collisions_subset_10000_renamed$`Date Occurred`)
-
+         Latitude = as.numeric(extract_numbers(Latitude))) %>%
   mutate(Longitude = as.character(extract_numbers(Longitude)),
          Latitude = as.character(extract_numbers(Latitude)),
          Longitude = as.numeric(Longitude),
@@ -102,11 +98,11 @@ LAweather1 <- read_csv("LAweather1.csv")
 #View(LAweather1)
 LAweather_US1CALA0030_1  <- LAweather1 %>%
   filter( STATION == "US1CALA0030")
-View(LAweather_US1CALA0030_1)
+#View(LAweather_US1CALA0030_1)
 
 LAweather1.1 <- LAweather1 %>%
   select(DATE, PRCP)
-View(LAweather1.1)
+#View(LAweather1.1)
 LAweather1.1 <- LAweather_US1CALA0030_1 %>%
   select(DATE, PRCP) %>%
   mutate(date = as.Date(DATE))%>%
@@ -120,7 +116,7 @@ LAweather1.1 <- LAweather_US1CALA0030_1 %>%
 final_weather_collision_1.1 <- merge(x = LAweather1.1,
                                  y= collisions_subset_10000_renamed, 
                                  by = "Date Occurred", all = TRUE)
-view(final_weather_collision_1.1)
+#view(final_weather_collision_1.1)
 
 
 #Reading weather 2 and mergin to final_weather_collision by PRCP
@@ -145,7 +141,7 @@ LA_Collision_weather_complete <- merge(x = final_weather_collision_1.1,
 LA_Collision_complete_tidy<-LA_Collision_weather_complete[c(1,2,4:28)] 
 
 
-#view(LA_Collision_complete_tidy)
+View(LA_Collision_complete_tidy)
 
 
 
