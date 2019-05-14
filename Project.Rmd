@@ -68,13 +68,36 @@ rename("Row original" = X,
   mutate(Longitude = as.numeric(extract_numbers(Longitude)),
          Latitude = as.numeric(extract_numbers(Latitude)))
 
+
+
+#importing weather data 
+LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
+#View(LAweather1)
+
+LAweather1.1 <- LAweather1 %>%
+  select(DATE, PRCP) %>%
+  mutate(date = as.Date(DATE))
+View(LAweather1.1)
+
+
+
+LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
+#View(LAweather2)
+
+
+
+
+
+
+
+
   
 
-typeof(collisions_subset_10000_renamed$Longitude)
+#typeof(collisions_subset_10000_renamed$Longitude)
 
-str(collisions_subset_10000_renamed)
 #str(collisions_subset_10000_renamed)
-view(collisions_subset_10000_renamed)
+#str(collisions_subset_10000_renamed)
+#view(collisions_subset_10000_renamed)
 #write.csv(collisions_subset, "Collision 5000.csv")
 #write.csv(collisions_subset_10000_renamed, "tidy_collisions.csv")
 
@@ -143,6 +166,19 @@ ggmap(LA_map)
 #shiny app - interactive graph with buttons and sliders up top 
   
 #heatmap and stuff below 
+```
+
+
+
+```{r}
+#importing weather data 
+LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
+#View(LAweather1)
+
+LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
+#View(LAweather2)
+
+
 ```
 
 
