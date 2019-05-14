@@ -258,6 +258,7 @@ ggplot(aes(x =  `Time Occurred`, y = `Victim Age`, color = `Victim Sex` )) +
 
 library(plotly)
 ani_raw <-  sample_n(LA_Collision_complete_tidy, 5000)
+renderPlot(
 ani_raw %>%
   plot_ly(x = ~`Neighborhood Councils`, y = ~`Victim Age`, size = ~`Victim Age`, 
           text = ~`Victim Sex`, hoverinfo = "text") %>%
@@ -268,7 +269,7 @@ ani_raw %>%
   ) %>%
   animation_slider(
     currentvalue = list(prefix = "Time Occurred", font = list(color="red"))
-  )
+  ))
 ```
 
 
