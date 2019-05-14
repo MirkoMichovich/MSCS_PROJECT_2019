@@ -22,6 +22,7 @@ library(mapproj) #map tools kits
 library(ggplot2) #read the map data
 library(tidyverse)
 library(stringr)
+library(shiny)
 
 register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
 
@@ -141,7 +142,7 @@ LA_Collision_weather_complete <- merge(x = final_weather_collision_1.1,
 LA_Collision_complete_tidy<-LA_Collision_weather_complete[c(1,2,4:28)] 
 
 
-#View(LA_Collision_complete_tidy)
+View(LA_Collision_complete_tidy)
 
 
 
@@ -192,21 +193,21 @@ mapset3 <- collisions_subset_10000_renamed %>%
 #ggmap(LA_map) + geom_density_2d()
 
 
-morningmap <- ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset1) +
+ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset1) +
   stat_density2d(data = mapset1, 
     aes(x = Longitude, y = Latitude, fill = ..level.., alpha = ..level..), size = 0.01, 
     bins = 16, geom = "polygon") + scale_fill_gradient(low = "green", high = "red", 
     guide = FALSE) + scale_alpha(range = c(0, 0.3), guide = FALSE)
 
 
-eveningmap <- ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset2) +
+ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset2) +
   stat_density2d(data = mapset2, 
     aes(x = Longitude, y = Latitude, fill = ..level.., alpha = ..level..), size = 0.01, 
     bins = 16, geom = "polygon") + scale_fill_gradient(low = "green", high = "red", 
     guide = FALSE) + scale_alpha(range = c(0, 0.3), guide = FALSE)
 
 
-middaymap <- ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset3) +
+ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset3) +
   stat_density2d(data = mapset3, 
     aes(x = Longitude, y = Latitude, fill = ..level.., alpha = ..level..), size = 0.01, 
     bins = 16, geom = "polygon") + scale_fill_gradient(low = "green", high = "red", 
@@ -233,8 +234,42 @@ ggmap(LA_map)
 #LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
 #View(LAweather2)
 
+LA_Collision_complete_tidy%>%
+ggplot(aes(x =  `Time Occurred`, y = `Victim Age`, color = `Victim Sex` ))  + 
+  geom_point()+
+  geom_smooth( se = FALSE, na.rm = TRUE)+
+  ylim(0, 100)%>%
+  labs(y="Victim Age", 
+       x="Time", 
+       title="Victims age by time")
 
+
+
+library(plotly)
+ani_raw <-  sample_n(LA_Collision_complete_tidy, 5000)
+ani_raw %>%
+  plot_ly(x = ~`Neighborhood Councils`, y = ~`Victim Age`, size = ~`Victim Age`, 
+          text = ~`Victim Sex`, hoverinfo = "text") %>%
+  layout(xaxis = list(type = "log"))%>%
+  add_markers(color = ~`Victim Sex`, frame = ~`Time Occurred`, ids = ~`Victim Descent`) %>%
+  animation_opts(1000, easing = "elastic", redraw = FALSE) %>%
+  animation_button(x = 1, xanchor = "right", y = 0, yanchor = "bottom"
+  ) %>%
+  animation_slider(
+    currentvalue = list(prefix = "Time Occurred", font = list(color="red"))
+  )
 ```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
