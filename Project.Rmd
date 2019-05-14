@@ -218,8 +218,6 @@ ggmap(LA_map)
 #heatmap and stuff below 
 ```
 
-
-
 ```{r}
 #importing weather data 
 LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
