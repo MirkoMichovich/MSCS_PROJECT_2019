@@ -79,18 +79,17 @@ rename("Row original" = X,
          `Date Reported` = as.Date(`Date Reported`),
          `Date Occurred` = as.Date(`Date Occurred`))%>%
   separate(Location, c("Longitude","Latitude"), sep =',' )%>%
-<<<<<<< HEAD
+
   mutate(Longitude = as.numeric(extract_numbers(Longitude)),
          Latitude = as.numeric(extract_numbers(Latitude)))
 
 typeof(collisions_subset_10000_renamed$`Date Occurred`)
-=======
+
   mutate(Longitude = as.character(extract_numbers(Longitude)),
          Latitude = as.character(extract_numbers(Latitude)),
          Longitude = as.numeric(Longitude),
          Latitude = as.numeric(Latitude))
 
->>>>>>> 1a25db913a2e49c15e61ceb64520c4a1c5fd6d50
 
 # typeof(collisions_subset_10000_renamed$`Date Reported`)
 # str(collisions_subset_10000_renamed)
@@ -105,16 +104,13 @@ LAweather_US1CALA0030_1  <- LAweather1 %>%
   filter( STATION == "US1CALA0030")
 View(LAweather_US1CALA0030_1)
 
-<<<<<<< HEAD
 LAweather1.1 <- LAweather1 %>%
   select(DATE, PRCP)
 View(LAweather1.1)
-=======
 LAweather1.1 <- LAweather_US1CALA0030_1 %>%
   select(DATE, PRCP) %>%
   mutate(date = as.Date(DATE))%>%
   rename("Date Occurred" = date)
->>>>>>> 1a25db913a2e49c15e61ceb64520c4a1c5fd6d50
 
 #View(LAweather1.1)
 
