@@ -32,7 +32,7 @@ register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
 shinyUI(pageWithSidebar(
 
   # Application title
-  headerPanel("Miles Per Gallon"),
+  headerPanel("LA TRAFFIC MAP"),
 
   sidebarPanel(),
 
@@ -125,12 +125,12 @@ LAweather2 <- read_csv("LAweather2.csv")
 
 LAweather_US1CALA0030_2  <- LAweather2 %>%
   filter( STATION == "US1CALA0030")
-View(LAweather_US1CALA0030_2)
+#View(LAweather_US1CALA0030_2)
   
 
 LAweather2.1 <- LAweather_US1CALA0030_2 %>%
   select(PRCP)
-view(LAweather2.1)
+#view(LAweather2.1)
 
 LA_Collision_weather_complete <- merge(x = final_weather_collision_1.1, 
                                        y = LAweather2.1,
@@ -141,7 +141,7 @@ LA_Collision_weather_complete <- merge(x = final_weather_collision_1.1,
 LA_Collision_complete_tidy<-LA_Collision_weather_complete[c(1,2,4:28)] 
 
 
-View(LA_Collision_complete_tidy)
+#View(LA_Collision_complete_tidy)
 
 
 
@@ -225,12 +225,12 @@ ggmap(LA_map)
 
 ```{r}
 #importing weather data 
-LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
-View(LAweather1)
-LAweather1 %>% 
-  filter(STATION == "US1CALA0036")
+# LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
+# View(LAweather1)
+# LAweather1 %>% 
+#   filter(STATION == "US1CALA0036")
 
-LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
+#LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
 #View(LAweather2)
 
 
