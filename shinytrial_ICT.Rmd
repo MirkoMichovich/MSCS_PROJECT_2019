@@ -8,15 +8,9 @@ runtime: shiny
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This RMarkdown document is made interactive using Shiny. Unlike the more traditional workflow of creating static reports, you can now create documents that allow your readers to change the assumptions underlying your analysis and see the results immediately. 
+Our datasets came from the Los Angeles area, and we decided to look at a sample of 10,000 car crashes that occurred between 2010 and the present. Weather data was also joined to this to look at what sort of connection was present there (not that LA weather is much to deal with, but it could still be a factor).
 
-To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
-
-## Inputs and Outputs
-
-You can embed Shiny inputs and outputs in your document. Outputs are automatically updated whenever inputs change.  This demonstrates how a standard R plot can be made interactive by wrapping it in the Shiny `renderPlot` function. The `selectInput` and `sliderInput` functions create the input widgets used to drive the plot.
-
-```{r}
+```{r, include=FALSE}
 library(tidyverse)
 ```
 
@@ -41,7 +35,7 @@ register_google(key = "AIzaSyARb0Fsx8OYgRVToJK_2Abl4r1lO_1ACCY", write = TRUE)
 
 ```
 
-```{r}
+```{r, include=FALSE}
 collisions_subset_10000 <- read.csv("Collision 10000.csv")
 #collisions_subset_10000 <- collisions[sample(nrow(collisions),10000),]
 
@@ -158,12 +152,12 @@ LA_Collision_complete_tidy<-LA_Collision_weather_complete[c(1,2,4:28)]
 
 ```
 
-```{r}
+```{r, include=FALSE}
 LA_map <- get_map(location = "los angeles, california", zoom = 11)
-ggmap(LA_map)
+#ggmap(LA_map)
 ```
 
-```{r}
+```{r, include=FALSE}
 #heatmap 
 
 
@@ -240,7 +234,7 @@ rainmap <- ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), dat
 
 ```
 
-```{r}
+```{r, include=FALSE}
 
 
 #shiny app - interactive graph with buttons and sliders up top 
@@ -250,7 +244,7 @@ rainmap <- ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), dat
 
 
 
-SHINY APP BELOW 
+How  crash location or behavior changes with the weather in LA
 
 ```{r, echo=FALSE, warning=FALSE}
 inputPanel(
@@ -265,6 +259,8 @@ renderPlot({
 })
 ```
 
+Looking at crashes in the morning versus evening rush 
+
 ```{r, echo=FALSE, warning=FALSE}
 inputPanel(
   checkboxInput("type_check2", "Evening Rush?", value = FALSE)
@@ -277,6 +273,8 @@ renderPlot({
         eveningmap
 })
 ```
+
+Visualizing crashes in a particular LA neighborhood
 
 ```{r, echo=FALSE}
 titlePanel("Area of Crashes")
