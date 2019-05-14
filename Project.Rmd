@@ -68,15 +68,14 @@ rename("Row original" = X,
   mutate(Longitude = as.numeric(extract_numbers(Longitude)),
          Latitude = as.numeric(extract_numbers(Latitude)))
 
-
+typeof(collisions_subset_10000_renamed$`Date Occurred`)
 
 #importing weather data 
 LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
 #View(LAweather1)
 
 LAweather1.1 <- LAweather1 %>%
-  select(DATE, PRCP) %>%
-  mutate(date = as.Date(DATE))
+  select(DATE, PRCP)
 View(LAweather1.1)
 
 
@@ -173,7 +172,9 @@ ggmap(LA_map)
 ```{r}
 #importing weather data 
 LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
-#View(LAweather1)
+View(LAweather1)
+LAweather1 %>% 
+  filter(STATION == "US1CALA0036")
 
 LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
 #View(LAweather2)
