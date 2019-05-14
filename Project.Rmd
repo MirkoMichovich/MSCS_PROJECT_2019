@@ -84,13 +84,36 @@ rename("Row original" = X,
          Longitude = as.numeric(Longitude),
          Latitude = as.numeric(Latitude))
 
+
+
+#importing weather data 
+LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
+#View(LAweather1)
+
+LAweather1.1 <- LAweather1 %>%
+  select(DATE, PRCP) %>%
+  mutate(date = as.Date(DATE))
+View(LAweather1.1)
+
+
+
+LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
+#View(LAweather2)
+
+
+
+
+
+
+
+
   
 
-typeof(collisions_subset_10000_renamed$Longitude)
+#typeof(collisions_subset_10000_renamed$Longitude)
 
-str(collisions_subset_10000_renamed)
 #str(collisions_subset_10000_renamed)
-view(collisions_subset_10000_renamed)
+#str(collisions_subset_10000_renamed)
+#view(collisions_subset_10000_renamed)
 #write.csv(collisions_subset, "Collision 5000.csv")
 #write.csv(collisions_subset_10000_renamed, "tidy_collisions.csv")
 
@@ -119,7 +142,15 @@ mapset2 <- collisions_subset_10000_renamed %>%
   filter(`Time Occurred` > 1800) %>%
   na.omit()
 
-ggmap(LA_map) + geom_density_2d()
+#midday crashes 
+mapset3 <- collisions_subset_10000_renamed %>%
+  select(`Crime Code Description`, Longitude, Latitude, `Time Occurred`) %>% 
+  filter(`Crime Code Description` == 'TRAFFIC COLLISION') %>%
+  filter(`Time Occurred` < 1500) %>%
+  filter(`Time Occurred` > 900) %>%
+  na.omit()
+
+#ggmap(LA_map) + geom_density_2d()
 
 
 ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset1) +
@@ -135,6 +166,13 @@ ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset2
     bins = 16, geom = "polygon") + scale_fill_gradient(low = "green", high = "red", 
     guide = FALSE) + scale_alpha(range = c(0, 0.3), guide = FALSE)
 
+
+ggmap(LA_map) + geom_density_2d(aes(x = Longitude, y = Latitude), data = mapset3) +
+  stat_density2d(data = mapset3, 
+    aes(x = Longitude, y = Latitude, fill = ..level.., alpha = ..level..), size = 0.01, 
+    bins = 16, geom = "polygon") + scale_fill_gradient(low = "green", high = "red", 
+    guide = FALSE) + scale_alpha(range = c(0, 0.3), guide = FALSE)
+
 ```
 
 ```{r}
@@ -144,6 +182,19 @@ ggmap(LA_map)
 #shiny app - interactive graph with buttons and sliders up top 
   
 #heatmap and stuff below 
+```
+
+
+
+```{r}
+#importing weather data 
+LAweather1 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather1.csv")
+#View(LAweather1)
+
+LAweather2 <- read_csv("~/Mscs 264 S19/Submit/MSCS_PROJECT_2019/LAweather2.csv")
+#View(LAweather2)
+
+
 ```
 
 
